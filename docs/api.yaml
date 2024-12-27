@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+  title: Telegram API Proxy
+  description: A simple API for interacting with Telegram.
+  version: 1.0.0
+paths:
+  /alive:
+    get:
+      summary: Health check
+      description: Ping to check if the API is running.
+      responses:
+        200:
+          description: The API is alive.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  /send:
+    post:
+      summary: Send a message
+      description: Resend a message to Telegram.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chat_id:
+                  type: integer
+                  description: Telegram chat ID
+                  example: 123456789
+                message:
+                  type: string
+                  description: The message content
+                  example: "Hello, Telegram!"
+      responses:
+        200:
+          description: Message sent successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: sent
+                  chat_id:
+                    type: integer
+                    example: 123456789
+                  message:
+                    type: string
+                    example: "Hello, Telegram!"
+
+  /getUpdates:
+    get:
+      summary: Get updates
+      description: Retrieve a list of free content updates.
+      responses:
+        200:
+          description: List of updates retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  updates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: The update ID
+                          example: 1
+                        content:
+                          type: string
+                          description: The content of the update
+                          example: "Free content 1"
