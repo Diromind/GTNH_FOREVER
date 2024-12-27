@@ -6,19 +6,52 @@ info:
 paths:
   /alive:
     get:
-      summary: Health check
       description: Ping to check if the API is running.
       responses:
         200:
-          description: The API is alive.
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  status:
+                  alive:
+                    type: bool
+
+  /alert:
+    post:
+      description: Forward alert message to bot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                chat_id:
+                  type: integer
+                  description: Telegram chat ID
+                message:
+                  type: string
+                  description: Alert message
+      responses:
+        200:
+          description: Message sent successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: bool
+        500:
+          description: Failed to send alert.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
                     type: string
-                    example: ok
 
   /send:
     post:
